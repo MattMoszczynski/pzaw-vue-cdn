@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+        <!-- PrimeVue -->
+        <link href="https://unpkg.com/primevue@^3/resources/themes/saga-blue/theme.css" rel="stylesheet" />
+        <link href="https://unpkg.com/primevue@^3/resources/primevue.min.css" rel="stylesheet" />
+        <link href="https://unpkg.com/primeflex@^3/primeflex.min.css" rel="stylesheet" />
+        <link href="https://unpkg.com/primeicons/primeicons.css" rel="stylesheet" />
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+        <!-- Vue i dodatki -->
+        <script src="https://unpkg.com/vue@next"></script>
+        <script src="https://unpkg.com/primevue@^3/core/core.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <!-- PrimeVue (kontrolki) -->
+        <script src="https://unpkg.com/primevue@^3/card/card.min.js"></script>
+        
+        <link href="./index.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div id="app">
+            <h1>Trochę tu nieład ale przedstawiam najważniejsze informacje:</h1>
+
+            <h2>1. Przykład zaimportowania komponentu z podpięciem wartości</h2>
+            <hello-component></hello-component>
+            <hello-component msg="Siema"></hello-component>
+
+            <br><br><br>
+
+
+
+            <h2>2. Przykładowe komponenty Prime Vue</h2>
+            
+            <p-card style="width: 25em">
+                <template #header>
+                    <img alt="user header" src="https://www.primefaces.org/wp-content/uploads/2020/02/primefacesorg-primevue-2020.png" style="height: 15rem">
+                </template>
+                <template #title>
+                    Card title
+                </template>
+                <template #subtitle>
+                    Card subtitle
+                </template>
+                <template #content>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+                    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                </template>
+                <template #footer>
+                    <small>Lokalizacja: ???</small><br>
+                    <small><i class="bi bi-people-fill"></i>??? znajomych</small>
+                </template>
+            </p-card>
+
+            <br>
+
+            <p-button label="Testowy przycisk"></p-button>
+
+            <br><br><br>
+
+
+
+            <h2>3. Lista kontrolek/komponentów Prime Vue</h2>
+            <a
+            href="https://primevue.org/setup"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+                Kliknij tu
+            </a>
+
+            <br><br><br>
+
+
+
+            <h2>4. Lista ikonek Prime Vue oraz ich użycie</h2>
+            <a
+            href="https://primevue.org/icons"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+                Kliknij tu
+            </a>
+
+            <br><br>
+
+            <i class="pi pi-check"></i>
+            <i class="pi pi-times"></i>
+
+            <br><br><br>
+
+
+
+            <h2>5. Lista ikonek Bootstrap oraz ich użycie</h2>
+            <a
+            href="https://icons.getbootstrap.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+                Kliknij tu
+            </a>
+
+            <br><br>
+
+            <i class="bi bi-sun"></i>
+            <i class="bi bi-cloud"></i>
+            <i class="bi bi-snow"></i>
+
+            <br><br><br>
+
+
+
+            <h2>6. Przykład pobrania danych za pomocą Axiosa:</h2>
+            {{ user }} <br><br> {{ user.login }}
+
+        </div>
+
+        <script type="text/x-template" id="hello-component">
+            <b>{{ msg }}</b>
+            <p>To jest mój własny komponent...</p>
+        </script>
+
+        <script type="module">
+            const { createApp } = Vue;
+            const app = {
+                components: {
+                    "p-card": primevue.card,
+                    "p-button": primevue.button
+                },
+                data() {
+                    return {
+                        user: {},
+                    }
+                },
+                mounted() {
+                    axios.get(`https://api.github.com/users/MattMoszczynski`)
+                    .then(response => {
+                        this.user = response.data
+                    })
+                }
+            };
+
+            const helloComponent = {
+                template: '#hello-component',
+                props: {
+                    msg: {type: String, required: true, default: "Hello komponent"}
+                }
+            }
+
+            createApp(app)
+                .component('hello-component', helloComponent)
+                .use(primevue.config.default)
+                .mount("#app");
+        </script>
+    </body>
+</html>
